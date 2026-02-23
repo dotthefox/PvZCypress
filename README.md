@@ -5,6 +5,9 @@ Cypress is an Open-Source reimplementation of Dedicated Servers for PvZ: Garden 
 * [KYBER](https://github.com/ArmchairDevelopers/Kyber) - Without their reimplementation of Frostbite's Socket Manager, this project would likely not exist.
 * [Andersson799](https://github.com/Andersson799) - He figured out how to reimplement Dedicated Server functionality in Frostbite games, and without his amazing work, this project would not be able to host dedicated servers.
 
+# License
+See [LICENSE.txt](LICENSE.txt)
+
 # Building
 Cypress should build out out of the box as long as you're using Visual Studio 2026.
 
