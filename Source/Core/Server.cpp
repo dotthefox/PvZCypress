@@ -38,29 +38,56 @@ namespace Cypress
 
 		stream >> levelName >> inclusionOptions >> levelDescription >> loadScreenGameMode >> loadScreenLevelName >> loadScreenLevelDescription;
 
-		LevelSetup setup;
-		if (strstr(levelName.c_str(), "Levels/") == 0)
+		if (inclusionOptions.find("GameMode=") == std::string::npos)
 		{
-			setup.m_name = std::format("Levels/{}/{}", levelName.c_str(), levelName.c_str());
+			cc.push("InclusionOptions must contain GameMode, syntax is \'GameMode=GameModeName\'");
+			return;
+		}
+
+		if (inclusionOptions.find("TOD=") == std::string::npos)
+		{
+			cc.push("TOD InclusionOption not set, defaulting to Day");
+
+			if (!inclusionOptions.ends_with(";"))
+				inclusionOptions += ";";
+
+			inclusionOptions += "TOD=Day";
+		}
+
+		if (inclusionOptions.find("HostedMode=") == std::string::npos)
+		{
+			cc.push("HostedMode InclusionOption not set, defaulting to ServerHosted");
+
+			if (!inclusionOptions.ends_with(";"))
+				inclusionOptions += ";";
+
+			inclusionOptions += "HostedMode=ServerHosted";
+		}
+
+		LevelSetup setup;
+		if (!levelName.starts_with("Levels/"))
+		{
+			setup.m_name = std::format("Levels/{}/{}", levelName, levelName);
 		}
 		else
 		{
-			setup.m_name = levelName.c_str();
+			setup.m_name = levelName;
 		}
 		setup.setInclusionOptions(inclusionOptions.c_str());
 
 #ifdef CYPRESS_GW2
 		if (!loadScreenGameMode.empty())
-			setup.LoadScreen_GameMode = loadScreenGameMode.c_str();
+			setup.LoadScreen_GameMode = loadScreenGameMode;
 
 		if (!loadScreenLevelName.empty())
-			setup.LoadScreen_GameMode = loadScreenLevelName.c_str();
+			setup.LoadScreen_GameMode = loadScreenLevelName;
 
 		if (!loadScreenLevelDescription.empty())
-			setup.LoadScreen_LevelDescription = loadScreenLevelDescription.c_str();
+			setup.LoadScreen_LevelDescription = loadScreenLevelDescription;
 #endif
 
 		fb::PostServerLoadLevelMessage(&setup, true, false);
+		cc.push("Loading {} {}", levelName, inclusionOptions);
 	}
 
 	void Server::ServerLoadNextPlaylistSetup(fb::ConsoleContext& cc)
@@ -259,7 +286,7 @@ namespace Cypress
 			return;
 		}
 
-		//@TODO: IMPL GW1
+		//TODO: IMPL GW1
 		auto func = reinterpret_cast<void* (*)(__int64 arena, int localPlayerId)>(0x141FCEE70);
 		void* msg = func(0x1429386E0, 0);
 
@@ -295,6 +322,7 @@ namespace Cypress
 			return;
 		}
 
+		//TODO: IMPL GW1
 		auto func = reinterpret_cast<void* (*)(__int64 arena, int localPlayerId)>(0x141FCEE70);
 		void* msg = func(0x1429386E0, 0);
 

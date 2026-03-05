@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "ConsoleFunctions.h"
-#include <sstream>
-#include <string>
 
 #include <fb/Engine/ConsoleRegistry.h>
 
@@ -18,6 +16,4 @@ namespace Cypress
 
 		fb::ConsoleRegistry::registerConsoleMethods(groupName, newMethod);
     }
-
-
 }

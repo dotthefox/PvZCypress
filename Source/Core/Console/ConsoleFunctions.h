@@ -1,6 +1,4 @@
 #pragma once
-#include <EASTL/vector.h>
-#include <vector>
 
 namespace Cypress
 {

@@ -80,8 +80,8 @@ void Cypress::GW2Module::RegisterCommands()
 	CYPRESS_REGISTER_CONSOLE_FUNCTION("Server", "LoadLevel", "<levelPath> <inclusionOptions> opt<loadScreenGameMode> opt<loadScreenLevelName> opt<loadScreenLevelDescription>", Server::ServerLoadLevel);
 	CYPRESS_REGISTER_CONSOLE_FUNCTION("Server", "KickPlayer", "<playerName> opt<reason>", Server::ServerKickPlayer);
 	CYPRESS_REGISTER_CONSOLE_FUNCTION("Server", "KickPlayerById", "<playerIndex> opt<reason>", Server::ServerKickPlayerById);
-	CYPRESS_REGISTER_CONSOLE_FUNCTION("Server", "BanPlayer", "<playerName>", Server::ServerBanPlayer);
-	CYPRESS_REGISTER_CONSOLE_FUNCTION("Server", "BanPlayerById", "<playerIndex>", Server::ServerBanPlayerById);
+	CYPRESS_REGISTER_CONSOLE_FUNCTION("Server", "BanPlayer", "<playerName> opt<reason>", Server::ServerBanPlayer);
+	CYPRESS_REGISTER_CONSOLE_FUNCTION("Server", "BanPlayerById", "<playerIndex> opt<reason>", Server::ServerBanPlayerById);
 	CYPRESS_REGISTER_CONSOLE_FUNCTION("Server", "Say", "<message> opt<duration>", Server::ServerSay);
 	CYPRESS_REGISTER_CONSOLE_FUNCTION("Server", "SayToPlayer", "<message> opt<duration>", Server::ServerSayToPlayer);
 	CYPRESS_REGISTER_CONSOLE_FUNCTION("Server", "LoadNextPlaylistSetup", "", Server::ServerLoadNextPlaylistSetup);
