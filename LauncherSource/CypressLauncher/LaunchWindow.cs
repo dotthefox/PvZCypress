@@ -225,13 +225,6 @@ public class LaunchWindow : Form
 
     private bool VerifyLaunch()
     {
-        //Process[] processesByName = Process.GetProcessesByName("Origin");
-        //Process[] processesByName2 = Process.GetProcessesByName("EADesktop");
-        //if (processesByName.Length == 0 && processesByName2.Length == 0)
-        //{
-        //    GameStatusLabel.Text = "Origin or EA Desktop must be open to continue.";
-        //    return false;
-        //}
         if (string.IsNullOrWhiteSpace(GameDirectoryLabel.Text))
         {
             GameStatusLabel.Text = "Game directory not set.";
@@ -273,13 +266,6 @@ public class LaunchWindow : Form
 
     private bool DedicatedVerifyLaunch()
     {
-        //Process[] processesByName = Process.GetProcessesByName("Origin");
-        //Process[] processesByName2 = Process.GetProcessesByName("EADesktop");
-        //if (processesByName.Length == 0 && processesByName2.Length == 0)
-        //{
-        //    GameStatusLabel.Text = "Origin or EA Desktop must be open to continue.";
-        //    return false;
-        //}
         if (string.IsNullOrWhiteSpace(GameDirectoryLabel.Text))
         {
             GameStatusLabel.Text = "Game directory not set.";
@@ -611,16 +597,8 @@ public class LaunchWindow : Form
         try
         {
             process2.Start();
-            //JoinButton.Enabled = false;
             GameStatusLabel.Text = $"Game launched (PID {process2.Id})";
             GameStatusLabel.ForeColor = Color.LightGreen;
-            new System.Threading.Timer(delegate
-            {
-                Invoke((System.Windows.Forms.MethodInvoker)delegate
-                {
-                    //base.WindowState = FormWindowState.Minimized;
-                });
-            }, null, 1000, -1);
         }
         catch (Win32Exception ex3)
         {
@@ -1332,16 +1310,8 @@ public class LaunchWindow : Form
         try
         {
             process2.Start();
-            //JoinButton.Enabled = false;
             GameStatusLabel.Text = $"Game launched (PID {process2.Id})";
             GameStatusLabel.ForeColor = Color.LightGreen;
-            new System.Threading.Timer(delegate
-            {
-                Invoke((System.Windows.Forms.MethodInvoker)delegate
-                {
-                    //base.WindowState = FormWindowState.Minimized;
-                });
-            }, null, 1000, -1);
         }
         catch (Win32Exception ex3)
         {
