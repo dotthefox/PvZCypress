@@ -41,6 +41,7 @@
     {
       "LevelName": "Levels/Level_Coop_ZombossFactory/Level_Coop_ZombossFactory",
       "GameMode": "TeamVanquishLarge0",
+      "TOD": "Day",
       "SettingsToApply": "GameMode.IceCreamRain false|GameMode.Salsa true"
     },
     {
