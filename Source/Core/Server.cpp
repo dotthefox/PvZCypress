@@ -472,7 +472,7 @@ namespace Cypress
 		setup->m_name = playlistSetup->LevelName.c_str();
 		setup->setInlusionOption("GameMode", playlistSetup->GameMode.c_str());
 		setup->setInlusionOption("HostedMode", "ServerHosted");
-		setup->setInlusionOption("TOD", "Day");
+		setup->setInlusionOption("TOD", playlistSetup->TOD.c_str());
 #ifdef CYPRESS_GW2
 		if (!playlistSetup->Loadscreen_GamemodeName.empty())
 			setup->LoadScreen_GameMode = playlistSetup->Loadscreen_GamemodeName.c_str();
@@ -523,6 +523,12 @@ namespace Cypress
 		{
 			CYPRESS_LOGTOSERVER(LogLevel::Info, "Loading first setup in playlist");
 			const PlaylistLevelSetup* playlistSetup = g_program->GetServer()->m_playlist.GetSetup(0);
+
+			if (g_program->GetServer()->m_playlist.IsMixedMode())
+				playlistSetup = g_program->GetServer()->m_playlist.GetMixedLevelSetup(0);
+			else
+				playlistSetup = g_program->GetServer()->m_playlist.GetSetup(0);
+
 			g_program->GetServer()->LevelSetupFromPlaylistSetup(&initialLevelSetup, playlistSetup);
 			g_program->GetServer()->ApplySettingsFromPlaylistSetup(playlistSetup);
 		}

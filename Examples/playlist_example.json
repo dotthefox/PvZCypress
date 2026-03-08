@@ -10,7 +10,8 @@
     },
     {
       "LevelName": "Levels/Level_Hub_TacoBandits/Level_Hub_TacoBandits",
-      "GameMode": "TeamVanquishLarge0"
+      "GameMode": "TeamVanquishLarge0",
+      "SettingsToApply": ""
     },
     {
       "LevelName": "Levels/Level_Coop_Rome/Level_Coop_Rome",
@@ -55,6 +56,7 @@
     {
       "LevelName": "Levels/Level_Rush_Snow/Level_Rush_Snow",
       "GameMode": "GnGLarge0",
+      "TOD": "Night",
       "SettingsToApply": "GameMode.Berserk false|GameMode.CheeseCapture true"
     }
   ]
