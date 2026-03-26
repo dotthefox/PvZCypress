@@ -34,12 +34,12 @@ namespace Cypress
 		auto stream = cc.stream();
 		std::string levelName;
 		std::string inclusionOptions;
-		std::string levelDescription;
 		std::string loadScreenGameMode;
 		std::string loadScreenLevelName;
 		std::string loadScreenLevelDescription;
+		std::string loadScreenUIAssetPath;
 
-		stream >> levelName >> inclusionOptions >> levelDescription >> loadScreenGameMode >> loadScreenLevelName >> loadScreenLevelDescription;
+		stream >> levelName >> inclusionOptions >> loadScreenGameMode >> loadScreenLevelName >> loadScreenLevelDescription >> loadScreenUIAssetPath;
 
 		if (inclusionOptions.find("GameMode=") == std::string::npos)
 		{
@@ -84,10 +84,14 @@ namespace Cypress
 			setup.LoadScreen_GameMode = loadScreenGameMode;
 
 		if (!loadScreenLevelName.empty())
-			setup.LoadScreen_GameMode = loadScreenLevelName;
+			setup.LoadScreen_LevelName = loadScreenLevelName;
 
 		if (!loadScreenLevelDescription.empty())
 			setup.LoadScreen_LevelDescription = loadScreenLevelDescription;
+		
+		if (!loadScreenUIAssetPath.empty())
+			setup.LoadScreen_UIAssetPath = loadScreenUIAssetPath;
+
 #endif
 
 		fb::PostServerLoadLevelMessage(&setup, true, false);
@@ -439,6 +443,19 @@ namespace Cypress
 			ghostcount,
 			GetMemoryUsage()
 		));
+
+		//Server restarting the level after the last player in it leaves. Might need for some instances, but is absolutely needed for GW2 because of the following below
+		//If the last player in a GW2 server leaves, anyone who joins afterwards will experience issues where, whether it's by taunting, or using specific abilities, some inputs will lock up. The only workaround so far is that the level is reloaded in someway, whether through restarting or changing it.
+		static int prevplayercount = playerMgr->humanPlayerCount();
+		int curplayercount = playerMgr->humanPlayerCount();
+
+		if (prevplayercount > 0 && curplayercount == 0)
+		{
+			//RestartLevel
+			reinterpret_cast<void(__fastcall*)()>(CYPRESS_GW_SELECT(0x14078EDA0, 0x140674180))();
+		}
+
+		prevplayercount = curplayercount;
 		
 		fb::LevelSetup setup = ptrread<fb::LevelSetup>(fbServerInstance, CYPRESS_GW_SELECT(0x40, 0x30));
 		if (setup.m_name.length() > 0)
@@ -509,6 +526,8 @@ namespace Cypress
 			setup->LoadScreen_LevelName = playlistSetup->Loadscreen_LevelName.c_str();
 		if (!playlistSetup->Loadscreen_LevelDescription.empty())
 			setup->LoadScreen_LevelDescription = playlistSetup->Loadscreen_LevelDescription.c_str();
+		if (!playlistSetup->Loadscreen_UIAssetPath.empty())
+		setup->LoadScreen_UIAssetPath = playlistSetup->Loadscreen_UIAssetPath.c_str();
 #endif
 	}
 
